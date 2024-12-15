@@ -44,7 +44,7 @@ else:
     ENV = LocalEnvironment(processes=12)
     SUITE = [
         "gripper:prob01.pddl",
-        # "gripper:prob10.pddl",
+        "gripper:prob10.pddl",
     ]
     TIME_LIMIT = 10
 ATTRIBUTES = [

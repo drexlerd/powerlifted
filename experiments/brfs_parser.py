@@ -12,6 +12,11 @@ def unsolvable(content, props):
 def invalid_plan_reported(content, props):
     props["invalid_plan_reported"] = int("val_plan_invalid" in props)
 
+def translate_search_time_to_ms(content, props):
+    if "search_time" in props:
+        props["search_time"] *= 1000
+
+
 class BrfsParser(Parser):
     """
     Goal found at: 0.00365
@@ -50,3 +55,4 @@ class BrfsParser(Parser):
         self.add_function(coverage)
         self.add_function(unsolvable)
         self.add_function(invalid_plan_reported)
+        self.add_function(translate_search_time_to_ms)
