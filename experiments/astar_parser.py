@@ -17,7 +17,7 @@ def translate_search_time_to_ms(content, props):
         props["search_time"] *= 1000
 
 
-class BrfsParser(Parser):
+class AStarParser(Parser):
     """
     Goal found at: 0.00365
     Total time: 0.003652

@@ -12,7 +12,7 @@ from downward.reports.absolute import AbsoluteReport
 from lab.environments import TetralithEnvironment, LocalEnvironment
 from lab.experiment import Experiment
 from lab.reports import Attribute, geometric_mean
-from brfs_parser import BrfsParser
+from astar_parser import AStarParserParser
 import utils
 
 # Create custom report class with suitable info and error attributes.
@@ -29,7 +29,7 @@ class BaseReport(AbsoluteReport):
 
 DIR = Path(__file__).resolve().parent
 REPO = DIR.parent
-BENCHMARKS_DIR = os.environ["BENCHMARKS_PDDL_DOWNWARD"]
+BENCHMARKS_DIR = os.environ["BENCHMARKS_PDDL_HTG"]
 
 NODE = platform.node()
 REMOTE = re.match(r"tetralith\d+.nsc.liu.se|n\d+", NODE)
@@ -66,11 +66,11 @@ MEMORY_LIMIT = 8000
 
 # Create a new experiment.
 exp = Experiment(environment=ENV)
-exp.add_parser(BrfsParser())
+exp.add_parser(AStarParser())
 
 PLANNER_DIR = str(REPO / "powerlifted.py")
 
-exp.add_resource("run_planner", str(DIR / "brfs_run_planner.sh"))
+exp.add_resource("run_planner", str(DIR / "astar_run_planner.sh"))
 
 for task in suites.build_suite(BENCHMARKS_DIR, SUITE):
     run = exp.add_run()
@@ -79,7 +79,7 @@ for task in suites.build_suite(BENCHMARKS_DIR, SUITE):
     # 'ff' binary has to be on the PATH.
     # We could also use exp.add_resource().
     run.add_command(
-        "brfs_planner",
+        "astar_planner",
         ["{run_planner}", PLANNER_DIR, "{domain}", "{problem}"],
         time_limit=TIME_LIMIT,
         memory_limit=MEMORY_LIMIT,
@@ -88,7 +88,7 @@ for task in suites.build_suite(BENCHMARKS_DIR, SUITE):
     # 'domain', 'problem', 'algorithm', 'coverage'.
     run.set_property("domain", task.domain)
     run.set_property("problem", task.problem)
-    run.set_property("algorithm", "powerlifted-brfs")
+    run.set_property("algorithm", "powerlifted-astar-blind")
     # BaseReport needs the following properties:
     # 'time_limit', 'memory_limit'.
     run.set_property("time_limit", TIME_LIMIT)
@@ -96,7 +96,7 @@ for task in suites.build_suite(BENCHMARKS_DIR, SUITE):
     # Every run has to have a unique id in the form of a list.
     # The algorithm name is only really needed when there are
     # multiple algorithms.
-    run.set_property("id", ["powerlifted-brfs", task.domain, task.problem])
+    run.set_property("id", ["powerlifted-astar-blind", task.domain, task.problem])
 
 # Add step that writes experiment files to disk.
 exp.add_step("build", exp.build)

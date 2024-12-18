@@ -23,7 +23,7 @@ fi
 export LANG=C
 
 # Run planner
-"$planner_exe" "-i" "$problem_file" "-s" "bfs"
+"$planner_exe" "-i" "$problem_file" "-s" "astar" "-e" "blind"
 
 # Run VAL
 echo -e "\nRun VAL\n"
