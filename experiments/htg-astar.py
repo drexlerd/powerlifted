@@ -12,7 +12,7 @@ from downward.reports.absolute import AbsoluteReport
 from lab.environments import TetralithEnvironment, LocalEnvironment
 from lab.experiment import Experiment
 from lab.reports import Attribute, geometric_mean
-from astar_parser import AStarParserParser
+from astar_parser import AStarParser
 import utils
 
 # Create custom report class with suitable info and error attributes.
