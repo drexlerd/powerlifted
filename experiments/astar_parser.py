@@ -12,10 +12,18 @@ def unsolvable(content, props):
 def invalid_plan_reported(content, props):
     props["invalid_plan_reported"] = int("val_plan_invalid" in props)
 
+def compute_total_time(content, props):
+    # total_time is translation_time + search_time
+    if "translation_time" in props and "search_time" in props:
+        props["total_time"] = props["translation_time"] + props["search_time"]
+
 def translate_search_time_to_ms(content, props):
     if "search_time" in props:
         props["search_time"] *= 1000
 
+def translate_total_time_to_ms(content, props):
+    if "total_time" in props:
+        props["total_time"] *= 1000
 
 class AStarParser(Parser):
     """
@@ -43,7 +51,8 @@ class AStarParser(Parser):
     """
     def __init__(self):
         super().__init__()
-        self.add_pattern("search_time", r"Total time: (.+)", type=float)
+        self.add_pattern("translation_time", r"Total translation time: (.+)s", type=float)
+        self.add_pattern("search_time", r"Total time: (.+)", type=float)  # search_time is total time in powerlifted
         self.add_pattern("num_expanded", r"Expanded (\d+) state\(s\).", type=int)
         self.add_pattern("num_generated", r"Generated (\d+) state\(s\).", type=int)
         self.add_pattern("num_expanded_until_last_g_layer", r"Expanded until last jump: (\d+) state\(s\).", type=int)  
@@ -55,4 +64,6 @@ class AStarParser(Parser):
         self.add_function(coverage)
         self.add_function(unsolvable)
         self.add_function(invalid_plan_reported)
+        self.add_function(compute_total_time) # has to come before translating search_time to ms
         self.add_function(translate_search_time_to_ms)
+        self.add_function(translate_total_time_to_ms)
