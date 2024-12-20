@@ -19,17 +19,17 @@ def compute_total_time(content, props):
 
 def translate_search_time_to_ms(content, props):
     if "search_time" in props:
-        props["search_time"] *= 1000
+        props["search_time"] = int(1000 * props["search_time"])
 
 def translate_total_time_to_ms(content, props):
     if "total_time" in props:
-        props["total_time"] *= 1000
+        props["total_time"] = int(1000 * props["total_time"])
 
 def ensure_minimum_times(content, props):
     for attr in ["search_time", "total_time"]:
         time = props.get(attr, None)
         if time is not None:
-            props[attr] = max(time, 1) 
+            props[attr] = max(time, 1)
 
 
 class AStarParser(Parser):
@@ -62,7 +62,7 @@ class AStarParser(Parser):
         self.add_pattern("search_time", r"Total time: (.+)", type=float)  # search_time is total time in powerlifted
         self.add_pattern("num_expanded", r"Expanded (\d+) state\(s\).", type=int)
         self.add_pattern("num_generated", r"Generated (\d+) state\(s\).", type=int)
-        self.add_pattern("num_expanded_until_last_g_layer", r"Expanded until last jump: (\d+) state\(s\).", type=int)  
+        self.add_pattern("num_expanded_until_last_g_layer", r"Expanded until last jump: (\d+) state\(s\).", type=int)
         self.add_pattern("num_generated_until_last_g_layer", r"Generated until last jump: (\d+) state\(s\).", type=int) # ok
         self.add_pattern("cost", r"Total plan cost: (\d+)", type=int)
         self.add_pattern("length", r"Plan length: (\d+) step\(s\).", type=int)
