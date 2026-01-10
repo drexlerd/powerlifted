@@ -100,7 +100,6 @@ ATTRIBUTES = [
     "cost",
     "length",
     "invalid",
-    "unsolvable",
 ]
 
 MEMORY_LIMIT = 16000
