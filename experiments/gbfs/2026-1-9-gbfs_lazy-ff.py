@@ -100,7 +100,8 @@ ATTRIBUTES = [
     "num_pruned_until_last_g_layer",
     "cost",
     "length",
-    "invalid_plan_reported",
+    "invalid",
+    "unsolvable",
 ]
 
 MEMORY_LIMIT = 16000
