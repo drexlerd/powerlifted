@@ -23,7 +23,7 @@ fi
 export LANG=C
 
 # Run planner
-"$planner_exe" "-i" "$problem_file" "-s" "gbfs" "-e" "ff"
+"$planner_exe" "-i" "$problem_file" "-s" "lazy-po" "-e" "ff"
 
 # Run VAL
 echo -e "\nRun VAL\n"
