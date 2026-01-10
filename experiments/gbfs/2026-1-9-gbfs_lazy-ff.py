@@ -97,7 +97,6 @@ ATTRIBUTES = [
     "num_expanded",
     "num_expanded_until_last_g_layer",
     "num_generated_until_last_g_layer",
-    "num_pruned_until_last_g_layer",
     "cost",
     "length",
     "invalid",
