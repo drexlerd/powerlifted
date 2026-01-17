@@ -47,7 +47,7 @@ if REMOTE:
     ENV = TetralithEnvironment(
         setup=TetralithEnvironment.DEFAULT_SETUP,
         memory_per_cpu="2840M",
-        cpus_per_task=6,  # 6*2840 >= 16000
+        cpus_per_task=2,  # 2*2840 >= 5000
         extra_options="#SBATCH --account=naiss2025-5-382")
     
 else:
@@ -67,7 +67,7 @@ if REMOTE:
         #("beluga2025", SUITE_BELUGA2025_SCALABILITY_DETERMINISTIC),
         #("mine-pddl", SUITE_MINEPDDL),
     ]
-    WALL_TIME_LIMIT = 30 * 60
+    WALL_TIME_LIMIT = 5 * 60
 else:
     SUITES = [
         # ("downward-benchmarks", ["gripper:prob01.pddl"]), 
@@ -100,7 +100,7 @@ ATTRIBUTES = [
     "invalid",
 ]
 
-MEMORY_LIMIT = 16000
+MEMORY_LIMIT = 5000
 
 # Create a new experiment.
 exp = Experiment(environment=ENV)
