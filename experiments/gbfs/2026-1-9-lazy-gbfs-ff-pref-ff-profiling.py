@@ -98,6 +98,7 @@ ATTRIBUTES = [
     "cost",
     "length",
     "invalid",
+    "memory",
 ]
 
 MEMORY_LIMIT = 5000

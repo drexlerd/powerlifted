@@ -9,6 +9,10 @@ def process_unsolvable(content, props):
 def process_invalid(content, props):
     props["invalid"] = int("invalid" in props)
 
+def process_memory(content, props):
+    if "memory" in props:
+        props["memory"] = props["memory"] / 1000
+
 def add_coverage(content, props):
     if "cost" in props or props.get("unsolvable", 0):
         props["coverage"] = 1
@@ -19,21 +23,6 @@ def compute_total_time(content, props):
     # total_time is translation_time + search_time
     if "translation_time" in props and "search_time" in props:
         props["total_time"] = props["translation_time"] + props["search_time"]
-
-def translate_search_time_to_ms(content, props):
-    if "search_time" in props:
-        props["search_time"] = int(1000 * props["search_time"])
-
-def translate_total_time_to_ms(content, props):
-    if "total_time" in props:
-        props["total_time"] = int(1000 * props["total_time"])
-
-def ensure_minimum_times(content, props):
-    for attr in ["search_time", "total_time"]:
-        time = props.get(attr, None)
-        if time is not None:
-            props[attr] = max(time, 1)
-
 
 class SearchParser(Parser):
     """
@@ -70,12 +59,10 @@ class SearchParser(Parser):
         self.add_pattern("cost", r"Total plan cost: (\d+)", type=int)
         self.add_pattern("length", r"Plan length: (\d+) step\(s\).", type=int)
         self.add_pattern("invalid", r"(Plan invalid)", type=str)
+        self.add_pattern("memory", r"Peak memory usage: (\d+) kB", type=int)
 
         self.add_function(process_unsolvable)
         self.add_function(process_invalid)
+        self.add_function(process_memory)
         self.add_function(add_coverage)
-        
         self.add_function(compute_total_time) # has to come before translating search_time to ms
-        self.add_function(translate_search_time_to_ms)
-        self.add_function(translate_total_time_to_ms)
-        self.add_function(ensure_minimum_times)
