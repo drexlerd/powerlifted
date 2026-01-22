@@ -19,6 +19,10 @@ def add_coverage(content, props):
     else:
         props["coverage"] = 0
 
+def add_search_time_per_expanded(context, props):
+    if "search_time" in props:
+        props["search_time_per_expanded"] = props["search_time"] / props["num_expanded"]
+
 def compute_total_time(content, props):
     # total_time is translation_time + search_time
     if "translation_time" in props and "search_time" in props:
@@ -58,6 +62,7 @@ class SearchParser(Parser):
         self.add_pattern("num_generated_until_last_g_layer", r"Generated until last jump: (\d+) state\(s\).", type=int) # ok
         self.add_pattern("cost", r"Total plan cost: (\d+)", type=int)
         self.add_pattern("length", r"Plan length: (\d+) step\(s\).", type=int)
+        self.add_pattern("initial_h_value", r"Initial heuristic value (\d+)", type=int)
         self.add_pattern("invalid", r"(Plan invalid)", type=str)
         self.add_pattern("memory", r"Peak memory usage: (\d+) kB", type=int)
 
@@ -66,3 +71,4 @@ class SearchParser(Parser):
         self.add_function(process_memory)
         self.add_function(add_coverage)
         self.add_function(compute_total_time) # has to come before translating search_time to ms
+        self.add_function(add_search_time_per_expanded)
