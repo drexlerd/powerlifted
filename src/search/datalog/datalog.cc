@@ -61,7 +61,9 @@ void Datalog::generate_action_rule(const ActionSchema &schema,
     // (e.g., logistics). This was already done in the previous implementation.
     std::reverse(body.begin(), body.end());
     std::unique_ptr<Annotation> ann = annotation_generator(schema.get_index(), task);
-    rules.emplace_back(make_unique<GenericRule>(schema.get_cost(), eff, std::move(body), std::move(ann), schema.get_index()));
+    // rules.emplace_back(make_unique<GenericRule>(schema.get_cost(), eff, std::move(body), std::move(ann), schema.get_index()));
+    // Dominik (2026-2-8): Use unit cost rules
+    rules.emplace_back(make_unique<GenericRule>(1, eff, std::move(body), std::move(ann), schema.get_index()));
 }
 
 void Datalog::generate_action_effect_rules(const ActionSchema &schema, AnnotationGenerator &annotation_generator) {

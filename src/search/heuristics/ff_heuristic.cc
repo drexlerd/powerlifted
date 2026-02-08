@@ -48,6 +48,7 @@ int FFHeuristic::compute_heuristic(const DBState &s, const Task &task) {
 
     //grounder.print_statistics(datalog);
 
+    // Dominik (2026-2-8): Use unit cost rules
     //int ff_cost = 0;
 
     std::sort(pi_ff.begin(), pi_ff.end());
