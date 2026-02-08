@@ -48,14 +48,14 @@ int FFHeuristic::compute_heuristic(const DBState &s, const Task &task) {
 
     //grounder.print_statistics(datalog);
 
-    int ff_cost = 0;
+    //int ff_cost = 0;
 
     std::sort(pi_ff.begin(), pi_ff.end());
     pi_ff.erase(std::unique(pi_ff.begin(), pi_ff.end()), pi_ff.end());
 
-    for (const auto &action : pi_ff) {
-        ff_cost += task.get_action_schema_by_index(action.first).get_cost();
-    }
+    //for (const auto &action : pi_ff) {
+    //    ff_cost += task.get_action_schema_by_index(action.first).get_cost();
+    //}
 
     datalog.reset_facts();
     for (const auto &r : datalog.get_rules())
@@ -65,8 +65,8 @@ int FFHeuristic::compute_heuristic(const DBState &s, const Task &task) {
 
     useful_atoms = datalog.get_useful_atoms();
 
-    return ff_cost;
-
+    //return ff_cost;
+    return pi_ff.size();
 }
 
 datalog::AnnotationGenerator FFHeuristic::get_annotation_generator() {
