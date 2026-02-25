@@ -19,9 +19,9 @@ def add_coverage(content, props):
     else:
         props["coverage"] = 0
 
-def add_search_time_per_expanded(context, props):
+def add_search_time_us_per_expanded(context, props):
     if "search_time" in props:
-        props["search_time_per_expanded"] = props["search_time"] / props["num_expanded"]
+        props["search_time_us_per_expanded"] = (props["search_time"] * 1_000_000) / props["num_expanded"]
 
 def compute_total_time(content, props):
     # total_time is translation_time + search_time
@@ -71,4 +71,4 @@ class SearchParser(Parser):
         self.add_function(process_memory)
         self.add_function(add_coverage)
         self.add_function(compute_total_time) # has to come before translating search_time to ms
-        self.add_function(add_search_time_per_expanded)
+        self.add_function(add_search_time_us_per_expanded)
