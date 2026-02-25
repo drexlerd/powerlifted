@@ -21,8 +21,11 @@ def add_coverage(content, props):
 
 def add_search_time_us_per_expanded(context, props):
     if "search_time" in props:
-        props["search_time_us_per_expanded"] = (props["search_time"] * 1_000_000) / props["num_expanded"]
-
+        if props["num_expanded"] == 0:
+            props["search_time_us_per_expanded"] = 1
+        else:
+            props["search_time_us_per_expanded"] = (props["search_time"] * 1_000_000) / props["num_expanded"]
+ 
 def compute_total_time(content, props):
     # total_time is translation_time + search_time
     if "translation_time" in props and "search_time" in props:
