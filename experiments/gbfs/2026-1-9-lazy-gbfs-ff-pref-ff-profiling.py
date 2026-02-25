@@ -111,7 +111,7 @@ exp.add_parser(SearchParser())
 
 PLANNER_DIR = str(REPO / "powerlifted.py")
 
-exp.add_resource("planner_exe", str(DIR / "lazy-gbfs-ff-pref-ff.sh"))
+exp.add_resource("planner_exe", str(DIR / "gbfs-lazy-hff-pref-ff.sh"))
 
 for prefix, SUITE in SUITES:
     for task in suites.build_suite(BENCHMARKS_DIR / prefix, SUITE):
@@ -130,7 +130,7 @@ for prefix, SUITE in SUITES:
         # 'domain', 'problem', 'algorithm', 'coverage'.
         run.set_property("domain", task.domain)
         run.set_property("problem", task.problem)
-        run.set_property("algorithm", "powerlifted-lazy-gbfs-ff-pref-ff")
+        run.set_property("algorithm", "powerlifted-gbfs-lazy-hff-pref-ff")
         # BaseReport needs the following properties:
         # 'time_limit', 'memory_limit'.
         run.set_property("wall_time_limit", WALL_TIME_LIMIT)
@@ -138,7 +138,7 @@ for prefix, SUITE in SUITES:
         # Every run has to have a unique id in the form of a list.
         # The algorithm name is only really needed when there are
         # multiple algorithms.
-        run.set_property("id", ["powerlifted-lazy-gbfs-ff-pref-ff", task.domain, task.problem])
+        run.set_property("id", ["powerlifted-gbfs-lazy-hff-pref-ff", task.domain, task.problem])
 
 # Add step that writes experiment files to disk.
 exp.add_step("build", exp.build)
