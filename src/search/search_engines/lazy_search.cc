@@ -17,6 +17,8 @@
 #include <map>
 #include <queue>
 #include <vector>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -32,6 +34,9 @@ utils::ExitCode LazySearch<PackedStateT>::search(const Task &task,
 
     GreedyOpenList preferred_open_list;
     GreedyOpenList regular_open_list;
+
+    const auto seed = uint64_t(0);
+    auto rng = std::mt19937_64(seed);
 
     //cout << "@ Initial state: \n\t";
     //task.dump_state(task.initial_state);
@@ -85,7 +90,10 @@ utils::ExitCode LazySearch<PackedStateT>::search(const Task &task,
 
         if (check_goal(task, generator, timer_start, state, node, space)) return utils::ExitCode::SUCCESS;
 
-        const auto applicable = generator.get_applicable_actions(action_schemas, state);
+        auto applicable = generator.get_applicable_actions(action_schemas, state);
+
+        std::shuffle(applicable.begin(), applicable.end(), rng);
+
         statistics.inc_generated(applicable.size());
 
         for (const LiftedOperatorId& op_id:applicable) {

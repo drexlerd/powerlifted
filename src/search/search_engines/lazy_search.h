@@ -6,6 +6,7 @@
 #include "search_space.h"
 #include "../open_lists/greedy_open_list.h"
 
+
 template <class PackedStateT>
 class LazySearch : public SearchBase {
 
