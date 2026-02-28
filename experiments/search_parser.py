@@ -4,7 +4,10 @@ from lab.parser import Parser
 
 
 def process_unsolvable(content, props):
-    props["unsolvable"] = int("exhausted" in props)
+    if props.get("exhausted", 0) or props.get("initial_pruned", 0):
+        props["unsolvable"] = 1
+    else:
+        props["unsolvable"] = 0
 
 def process_invalid(content, props):
     props["invalid"] = int("invalid" in props)
@@ -66,6 +69,8 @@ class SearchParser(Parser):
         self.add_pattern("cost", r"Total plan cost: (\d+)", type=int)
         self.add_pattern("length", r"Plan length: (\d+) step\(s\).", type=int)
         self.add_pattern("initial_h_value", r"Initial heuristic value (\d+)", type=int)
+        self.add_pattern("initial_pruned", r"(Initial state is unsolvable!)", type=str)
+        self.add_pattern("exhausted", r"(No solution found!)", type=str)
         self.add_pattern("invalid", r"(Plan invalid)", type=str)
         self.add_pattern("memory", r"Peak memory usage: (\d+) kB", type=int)
 
@@ -75,3 +80,5 @@ class SearchParser(Parser):
         self.add_function(add_coverage)
         self.add_function(compute_total_time) # has to come before translating search_time to ms
         self.add_function(add_search_time_us_per_expanded)
+
+

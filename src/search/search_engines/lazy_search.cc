@@ -45,7 +45,7 @@ utils::ExitCode LazySearch<PackedStateT>::search(const Task &task,
     heuristic_layer = heuristic.compute_heuristic(task.initial_state, task);
     root_node.open(0, heuristic_layer);
     if (heuristic_layer == UNSOLVABLE_STATE) {
-        cerr << "Initial state is unsolvable!" << endl;
+        cout << "Initial state is unsolvable!" << endl;
         exit(1);
     }
     statistics.inc_evaluations();
