@@ -91,17 +91,15 @@ ATTRIBUTES = [
     "coverage",
     "unsolvable",
     "initial_h_value",
-    "search_time",
-    "total_time",
+    "search_time_s",
+    "total_time_s",
     "num_generated",
     "num_expanded",
-    "search_time_us_per_expanded",
-    "num_expanded_until_last_g_layer",
-    "num_generated_until_last_g_layer",
+    "search_time_ms_per_expanded",
     "cost",
     "length",
     "invalid",
-    "memory",
+    "memory_mb",
 ]
 
 MEMORY_LIMIT = 16000
